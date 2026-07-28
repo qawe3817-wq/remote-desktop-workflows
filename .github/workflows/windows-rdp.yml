@@ -25,6 +25,7 @@ jobs:
 
       - name: Start Cloudflare Tunnel
         run: |
+          New-Item -ItemType Directory -Force -Path "C:\tmp"
           Write-Host "============================================"
           Write-Host "🚀 WINDOWS RDP - CLOUDFLARE TUNNEL"
           Write-Host "============================================"
