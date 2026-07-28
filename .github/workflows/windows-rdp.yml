@@ -18,7 +18,16 @@ jobs:
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "SecurityLayer" -Value 1
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0
           Write-Host "✅ RDP Enabled"
-
+          
+      - name: Verify RDP Service
+        run: |
+          Write-Host "Checking RDP service status..."
+          Get-Service -Name TermService | Select-Object Name, Status
+          Write-Host "Checking port 3389 listeners..."
+          netstat -ano | findstr :3389
+          Write-Host "Checking firewall rule..."
+          Get-NetFirewallRule -DisplayGroup "Remote Desktop" | Select-Object Name, Enabled, Direction, Action
+          
       - name: Set Administrator Password
         run: |
           Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "P@ssw0rd123!" -Force)
