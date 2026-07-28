@@ -30,7 +30,7 @@ jobs:
           Write-Host "🚀 WINDOWS RDP - CLOUDFLARE TUNNEL"
           Write-Host "============================================"
           Write-Host ""
-          Start-Process -NoNewWindow -FilePath "cloudflared" -ArgumentList "tunnel --url rdp://localhost:3389" -RedirectStandardOutput "C:\tmp\tunnel.log" -RedirectStandardError "C:\tmp\tunnel.err"
+          Start-Process -NoNewWindow -FilePath "cloudflared" -ArgumentList "tunnel --url tcp://localhost:3389" -RedirectStandardOutput "C:\tmp\tunnel.log" -RedirectStandardError "C:\tmp\tunnel.err"
           Write-Host "✅ Tunnel process started (PID: $($process.Id)). Waiting for connection..."
           Start-Sleep -Seconds 10
           Write-Host ""
