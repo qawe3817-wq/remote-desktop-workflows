@@ -29,9 +29,12 @@ jobs:
           Write-Host "🚀 WINDOWS RDP - CLOUDFLARE TUNNEL"
           Write-Host "============================================"
           Write-Host ""
-          Start-Process -NoNewWindow -FilePath "cloudflared" -ArgumentList "tunnel --url tcp://localhost:3389"
+          Start-Job -Name "CloudflareTunnel" -ScriptBlock {
+          cloudflared tunnel --url tcp://localhost:3389
+           } | Out-Null
+          Write-Host "✅ Tunnel job started in background."
+          Write-Host "   (Job Name: CloudflareTunnel)"
           Start-Sleep -Seconds 15
-
           Write-Host ""
           Write-Host "✅ TUNNEL STARTED! Check logs above for URL"
           Write-Host ""
@@ -42,11 +45,6 @@ jobs:
           Write-Host "   CPU: 4 cores"
           Write-Host "   RAM: 16GB"
           Write-Host "============================================"
-
-          while ($true) {
-              Write-Host "Session Active - Keeping alive..."
-              Start-Sleep -Seconds 60
-          }
 
       - name: Keep Session Alive
         run: |
